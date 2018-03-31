@@ -19,11 +19,13 @@ public class OnlineLogisticRegression {
 		String outputFile = "model/model";
 		java.util.List<String> predictorList = Arrays.asList("outlook", "temparature", "humidity", "windy", "play");
 		java.util.List<String> typeList = Arrays.asList("w", "n", "n", "w", "w");
-
+		/*
+		 * w = denotes Nominal Features, n = denotes Numeric Features
+		 */
 		LogisticModelParameters lmp = new LogisticModelParameters();
-		lmp.setTargetVariable("play");
-		lmp.setMaxTargetCategories(2);
-		lmp.setNumFeatures(4);
+		lmp.setTargetVariable("play"); // class Variable "play"
+		lmp.setMaxTargetCategories(2); // 2 bcz [yes/no]
+		lmp.setNumFeatures(4); // Remaining 4 Features
 		lmp.setUseBias(false);
 		lmp.setTypeMap(predictorList, typeList);
 		lmp.setLearningRate(0.5);
@@ -36,9 +38,10 @@ public class OnlineLogisticRegression {
 		int k = 0;
 		for (int pass = 0; pass < passes; pass++) {
 			BufferedReader in = new BufferedReader(new FileReader(inputFile));
-			csv.firstLine(in.readLine());
+			csv.firstLine(in.readLine()); // Header of the Features
 
-			String line = in.readLine();
+			String line = in.readLine(); // Seceond Line of the File, that is
+											// features
 			while (line != null) {
 				System.out.println(line);
 				Vector input = new RandomAccessSparseVector(lmp.getNumFeatures());
